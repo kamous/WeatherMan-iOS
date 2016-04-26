@@ -20,6 +20,9 @@
 		584DB07A1CCE740D0078A564 /* IndexHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584DB0791CCE740D0078A564 /* IndexHeaderView.xib */; };
 		584DB07C1CCE7A050078A564 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584DB07B1CCE7A050078A564 /* BaseViewController.swift */; };
 		584DB07E1CCE7AF90078A564 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584DB07D1CCE7AF90078A564 /* RootViewController.swift */; };
+		58DE26311CCFC906004AA189 /* WMResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DE26301CCFC906004AA189 /* WMResponse.swift */; };
+		58DE26331CCFC94C004AA189 /* WMNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DE26321CCFC94C004AA189 /* WMNetwork.swift */; };
+		58DE26361CCFCD8F004AA189 /* BaiduManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DE26351CCFCD8F004AA189 /* BaiduManager.swift */; };
 		5ADE90D533C447AB05228B48 /* Pods_WeatherMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 163436A09BEC39A243D3BB47 /* Pods_WeatherMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +66,9 @@
 		584DB0791CCE740D0078A564 /* IndexHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IndexHeaderView.xib; sourceTree = "<group>"; };
 		584DB07B1CCE7A050078A564 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		584DB07D1CCE7AF90078A564 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		58DE26301CCFC906004AA189 /* WMResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMResponse.swift; sourceTree = "<group>"; };
+		58DE26321CCFC94C004AA189 /* WMNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMNetwork.swift; sourceTree = "<group>"; };
+		58DE26351CCFCD8F004AA189 /* BaiduManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaiduManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +183,7 @@
 		584DB06C1CCE6CC80078A564 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				58DE26341CCFCD6D004AA189 /* Baidu */,
 				584DB06D1CCE6CC80078A564 /* Network */,
 				584DB06E1CCE6CC80078A564 /* Public */,
 				584DB06F1CCE6CC80078A564 /* View */,
@@ -187,6 +194,8 @@
 		584DB06D1CCE6CC80078A564 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				58DE26301CCFC906004AA189 /* WMResponse.swift */,
+				58DE26321CCFC94C004AA189 /* WMNetwork.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -213,6 +222,14 @@
 				584DB0791CCE740D0078A564 /* IndexHeaderView.xib */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		58DE26341CCFCD6D004AA189 /* Baidu */ = {
+			isa = PBXGroup;
+			children = (
+				58DE26351CCFCD8F004AA189 /* BaiduManager.swift */,
+			);
+			path = Baidu;
 			sourceTree = "<group>";
 		};
 		BD49999BEF71779EDB6B1317 /* Frameworks */ = {
@@ -406,10 +423,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58DE26311CCFC906004AA189 /* WMResponse.swift in Sources */,
 				584DB0751CCE6E330078A564 /* SettingViewController.swift in Sources */,
 				584DB0781CCE73F70078A564 /* IndexHeaderView.swift in Sources */,
+				58DE26361CCFCD8F004AA189 /* BaiduManager.swift in Sources */,
 				584DB0731CCE6E260078A564 /* WeatherListViewController.swift in Sources */,
 				584DB07E1CCE7AF90078A564 /* RootViewController.swift in Sources */,
+				58DE26331CCFC94C004AA189 /* WMNetwork.swift in Sources */,
 				584DB03D1CCE66260078A564 /* AppDelegate.swift in Sources */,
 				584DB07C1CCE7A050078A564 /* BaseViewController.swift in Sources */,
 				584DB0711CCE6CED0078A564 /* IndexViewController.swift in Sources */,

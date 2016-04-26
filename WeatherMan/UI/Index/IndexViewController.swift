@@ -9,6 +9,8 @@
 import UIKit
 import SnapKit
 import KGFloatingDrawer
+import Alamofire
+
 class IndexViewController: BaseViewController {
     var headerView :IndexHeaderView? = nil
     
@@ -16,6 +18,8 @@ class IndexViewController: BaseViewController {
         super.viewDidLoad()
         
         self.initHeaderView()
+        
+        self.loadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,6 +37,19 @@ class IndexViewController: BaseViewController {
         self.headerView = headerView
         
     }
+    
+    func loadData(){
+        var urlStr = "http://api.map.baidu.com/telematics/v3/weather?location=北京&output=json&ak=\(BaiduManager.appKey)&mcode=com.kamous.WeatherMan"
+        urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponse) in
+            if response.isSuccess{
+                print("Success:\(response.data)")
+            }else{
+                print("Failed:\(response.data)")
+            }
+        }
+    }
+    
     // MARK: - Action
     @IBAction func onLeftButtonPressed(sender: AnyObject) {
         let rootNav = UIApplication.sharedApplication().keyWindow?.rootViewController as! UINavigationController

@@ -89,6 +89,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-WeatherMan/MMDrawerController.framework"
   install_framework "Pods-WeatherMan/ObjectMapper.framework"
   install_framework "Pods-WeatherMan/PullToRefresh.framework"
+  install_framework "Pods-WeatherMan/SnapKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-WeatherMan/Alamofire.framework"
@@ -96,4 +97,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-WeatherMan/MMDrawerController.framework"
   install_framework "Pods-WeatherMan/ObjectMapper.framework"
   install_framework "Pods-WeatherMan/PullToRefresh.framework"
+  install_framework "Pods-WeatherMan/SnapKit.framework"
 fi

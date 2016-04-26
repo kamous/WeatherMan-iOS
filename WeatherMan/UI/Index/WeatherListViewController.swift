@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherListViewController: UIViewController {
+class WeatherListViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,4 +32,19 @@ class WeatherListViewController: UIViewController {
     }
     */
 
+}
+
+
+// MARK: - UITableView
+extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2;
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cityCell", forIndexPath: indexPath)
+        
+        return cell
+        
+    }
 }

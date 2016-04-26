@@ -15,7 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let rootNav:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("RootNavigationController") as! UINavigationController
+        
+        let rootVC:RootViewController = RootViewController()
+        let v = rootVC.view
+            //UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("RootViewController") as! RootViewController
+        rootNav.viewControllers = [rootVC]
+        rootNav.setNavigationBarHidden(true, animated: false)
+        self.window?.rootViewController = rootNav
+        
         return true
     }
 

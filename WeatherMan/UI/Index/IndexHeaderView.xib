@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RootViewController" customModule="WeatherMan" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="lCu-Bm-Pmi" customClass="IndexHeaderView" customModule="WeatherMan" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6E-Tg-A6z">
+                    <rect key="frame" x="10" y="10" width="50" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Zhm-Rf-rbM"/>
+                        <constraint firstAttribute="width" constant="50" id="fhX-Uy-zZO"/>
+                    </constraints>
+                    <state key="normal" title="List"/>
+                    <connections>
+                        <action selector="onLeftButtonPressed:" destination="-1" eventType="touchUpInside" id="z6h-nl-7jR"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWY-jn-nfU">
+                    <rect key="frame" x="166" y="25" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJV-cp-gVS">
+                    <rect key="frame" x="173" y="51" width="28.5" height="13.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k28-TJ-8Zj">
+                    <rect key="frame" x="315" y="10" width="50" height="40"/>
+                    <state key="normal" title="Setting"/>
+                    <connections>
+                        <action selector="onRightButtonPressed:" destination="-1" eventType="touchUpInside" id="ev9-p3-o91"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="JWY-jn-nfU" firstAttribute="top" secondItem="lCu-Bm-Pmi" secondAttribute="top" constant="25" id="2az-Vs-W5V"/>
+                <constraint firstItem="a6E-Tg-A6z" firstAttribute="top" secondItem="lCu-Bm-Pmi" secondAttribute="top" constant="10" id="7QR-F5-rpj"/>
+                <constraint firstAttribute="trailing" secondItem="k28-TJ-8Zj" secondAttribute="trailing" constant="10" id="7gX-HK-c6l"/>
+                <constraint firstItem="cJV-cp-gVS" firstAttribute="top" secondItem="JWY-jn-nfU" secondAttribute="bottom" constant="5" id="ENi-Mc-xfd"/>
+                <constraint firstItem="k28-TJ-8Zj" firstAttribute="height" secondItem="a6E-Tg-A6z" secondAttribute="height" id="LEH-pc-hvF"/>
+                <constraint firstItem="cJV-cp-gVS" firstAttribute="centerX" secondItem="JWY-jn-nfU" secondAttribute="centerX" id="QRR-rC-TpU"/>
+                <constraint firstItem="JWY-jn-nfU" firstAttribute="centerX" secondItem="lCu-Bm-Pmi" secondAttribute="centerX" id="TTw-xx-eyW"/>
+                <constraint firstItem="a6E-Tg-A6z" firstAttribute="leading" secondItem="lCu-Bm-Pmi" secondAttribute="leading" constant="10" id="VOL-uf-wJZ"/>
+                <constraint firstItem="k28-TJ-8Zj" firstAttribute="top" secondItem="a6E-Tg-A6z" secondAttribute="top" id="flx-lW-gZs"/>
+                <constraint firstItem="k28-TJ-8Zj" firstAttribute="width" secondItem="a6E-Tg-A6z" secondAttribute="width" id="x4l-tc-9MQ"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="leftButton" destination="a6E-Tg-A6z" id="TBV-ks-LtR"/>
+                <outlet property="rightButton" destination="k28-TJ-8Zj" id="uRV-Sh-ke2"/>
+                <outlet property="subTitleLabel" destination="cJV-cp-gVS" id="AXH-jr-qUX"/>
+                <outlet property="titleLabel" destination="JWY-jn-nfU" id="VEB-KG-W1U"/>
+            </connections>
+            <point key="canvasLocation" x="113.5" y="-90"/>
+        </view>
+    </objects>
+</document>

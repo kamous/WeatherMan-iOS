@@ -11,7 +11,7 @@ import SnapKit
 import KGFloatingDrawer
 import Alamofire
 
-class IndexViewController: BaseViewController {
+class IndexViewController: WMBaseViewController {
     var headerView :IndexHeaderView? = nil
     
     override func viewDidLoad() {
@@ -61,6 +61,7 @@ class IndexViewController: BaseViewController {
         
     }
     @IBAction func onRightButtonPressed(sender: AnyObject) {
+        IndicatorView.showString("正在开发中。。。")
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class WMBaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

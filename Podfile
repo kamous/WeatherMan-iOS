@@ -10,4 +10,5 @@ target :WeatherMan do
     pod 'ObjectMapper', '~> 1.1'	#json
     pod 'PullToRefresher', '~> 1.3'
     pod 'SnapKit', '~> 0.20'
+    pod "PKHUD"
 end

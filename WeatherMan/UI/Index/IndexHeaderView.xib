@@ -11,13 +11,13 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6E-Tg-A6z">
-                    <rect key="frame" x="10" y="10" width="50" height="40"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6E-Tg-A6z">
+                    <rect key="frame" x="10" y="10" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="Zhm-Rf-rbM"/>
-                        <constraint firstAttribute="width" constant="50" id="fhX-Uy-zZO"/>
+                        <constraint firstAttribute="width" constant="40" id="fhX-Uy-zZO"/>
                     </constraints>
-                    <state key="normal" title="List"/>
+                    <state key="normal" image="list_1"/>
                     <connections>
                         <action selector="onLeftButtonPressed:" destination="-1" eventType="touchUpInside" id="z6h-nl-7jR"/>
                     </connections>
@@ -29,14 +29,14 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJV-cp-gVS">
-                    <rect key="frame" x="173" y="51" width="28.5" height="13.5"/>
+                    <rect key="frame" x="173" y="51" width="29" height="14"/>
                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k28-TJ-8Zj">
-                    <rect key="frame" x="315" y="10" width="50" height="40"/>
-                    <state key="normal" title="Setting"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k28-TJ-8Zj">
+                    <rect key="frame" x="325" y="10" width="40" height="40"/>
+                    <state key="normal" image="setting_1"/>
                     <connections>
                         <action selector="onRightButtonPressed:" destination="-1" eventType="touchUpInside" id="ev9-p3-o91"/>
                     </connections>
@@ -66,4 +66,8 @@
             <point key="canvasLocation" x="113.5" y="-90"/>
         </view>
     </objects>
+    <resources>
+        <image name="list_1" width="26" height="35"/>
+        <image name="setting_1" width="44" height="31"/>
+    </resources>
 </document>

@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58432FA21CD0E63B008E61EC /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58432FA11CD0E63B008E61EC /* IndicatorView.swift */; };
+		58432FA41CD0E8A2008E61EC /* WMNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58432FA31CD0E8A2008E61EC /* WMNavigationController.swift */; };
 		584DB03D1CCE66260078A564 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584DB03C1CCE66260078A564 /* AppDelegate.swift */; };
 		584DB0421CCE66260078A564 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 584DB0401CCE66260078A564 /* Main.storyboard */; };
-		584DB0441CCE66260078A564 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 584DB0431CCE66260078A564 /* Assets.xcassets */; };
+		584DB0441CCE66260078A564 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 584DB0431CCE66260078A564 /* Image.xcassets */; };
 		584DB0471CCE66260078A564 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 584DB0451CCE66260078A564 /* LaunchScreen.storyboard */; };
 		584DB0521CCE66260078A564 /* WeatherManTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584DB0511CCE66260078A564 /* WeatherManTests.swift */; };
 		584DB05D1CCE66260078A564 /* WeatherManUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584DB05C1CCE66260078A564 /* WeatherManUITests.swift */; };
@@ -47,10 +49,12 @@
 		163436A09BEC39A243D3BB47 /* Pods_WeatherMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E329D5BEF5E43525FA40A8 /* Pods-WeatherMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherMan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherMan/Pods-WeatherMan.debug.xcconfig"; sourceTree = "<group>"; };
 		4857A7512314F874D04BBED5 /* Pods-WeatherMan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherMan.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherMan/Pods-WeatherMan.release.xcconfig"; sourceTree = "<group>"; };
+		58432FA11CD0E63B008E61EC /* IndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
+		58432FA31CD0E8A2008E61EC /* WMNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMNavigationController.swift; sourceTree = "<group>"; };
 		584DB0391CCE66260078A564 /* WeatherMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		584DB03C1CCE66260078A564 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		584DB0411CCE66260078A564 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		584DB0431CCE66260078A564 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		584DB0431CCE66260078A564 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		584DB0461CCE66260078A564 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		584DB0481CCE66260078A564 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		584DB04D1CCE66260078A564 /* WeatherManTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherManTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,7 +139,7 @@
 				584DB06C1CCE6CC80078A564 /* Utils */,
 				584DB03C1CCE66260078A564 /* AppDelegate.swift */,
 				584DB0401CCE66260078A564 /* Main.storyboard */,
-				584DB0431CCE66260078A564 /* Assets.xcassets */,
+				584DB0431CCE66260078A564 /* Image.xcassets */,
 				584DB0451CCE66260078A564 /* LaunchScreen.storyboard */,
 				584DB0481CCE66260078A564 /* Info.plist */,
 			);
@@ -204,6 +208,8 @@
 			isa = PBXGroup;
 			children = (
 				584DB07B1CCE7A050078A564 /* BaseViewController.swift */,
+				58432FA11CD0E63B008E61EC /* IndicatorView.swift */,
+				58432FA31CD0E8A2008E61EC /* WMNavigationController.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -349,7 +355,7 @@
 			files = (
 				584DB07A1CCE740D0078A564 /* IndexHeaderView.xib in Resources */,
 				584DB0471CCE66260078A564 /* LaunchScreen.storyboard in Resources */,
-				584DB0441CCE66260078A564 /* Assets.xcassets in Resources */,
+				584DB0441CCE66260078A564 /* Image.xcassets in Resources */,
 				584DB0421CCE66260078A564 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,9 +430,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				58DE26311CCFC906004AA189 /* WMResponse.swift in Sources */,
+				58432FA41CD0E8A2008E61EC /* WMNavigationController.swift in Sources */,
 				584DB0751CCE6E330078A564 /* SettingViewController.swift in Sources */,
 				584DB0781CCE73F70078A564 /* IndexHeaderView.swift in Sources */,
 				58DE26361CCFCD8F004AA189 /* BaiduManager.swift in Sources */,
+				58432FA21CD0E63B008E61EC /* IndicatorView.swift in Sources */,
 				584DB0731CCE6E260078A564 /* WeatherListViewController.swift in Sources */,
 				584DB07E1CCE7AF90078A564 /* RootViewController.swift in Sources */,
 				58DE26331CCFC94C004AA189 /* WMNetwork.swift in Sources */,

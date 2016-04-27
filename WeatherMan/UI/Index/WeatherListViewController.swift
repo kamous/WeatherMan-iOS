@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherListViewController: BaseViewController {
+class WeatherListViewController: WMBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -19,7 +19,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="285" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qu1-Vg-jWZ">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="weatherPicCell" rowHeight="400" id="zTG-9g-gOB">
                                         <rect key="frame" x="0.0" y="28" width="600" height="400"/>
@@ -28,30 +28,30 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d3O-Xn-0lh">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sunny" translatesAutoresizingMaskIntoConstraints="NO" id="d3O-Xn-0lh">
                                                     <rect key="frame" x="200" y="100" width="200" height="200"/>
-                                                    <color key="backgroundColor" red="0.63921568630000003" green="0.67843137249999996" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="200" id="WYT-7I-bdZ"/>
                                                         <constraint firstAttribute="width" constant="200" id="rnx-QP-Soz"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wU7-KZ-tqy">
-                                                    <rect key="frame" x="20" y="293" width="89.5" height="76.5"/>
+                                                    <rect key="frame" x="20" y="293" width="90" height="77"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="64"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小雨" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74P-8W-zLb">
-                                                    <rect key="frame" x="129" y="323" width="64" height="38.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="小雨" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="74P-8W-zLb">
+                                                    <rect key="frame" x="129" y="323" width="64" height="39"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0a-EG-WPe">
-                                                    <rect key="frame" x="20" y="368.5" width="42" height="21"/>
+                                                    <rect key="frame" x="20" y="369" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -66,6 +66,7 @@
                                                 <constraint firstItem="74P-8W-zLb" firstAttribute="leading" secondItem="wU7-KZ-tqy" secondAttribute="trailing" constant="20" id="uIs-nh-SCK"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -74,11 +75,11 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Qu1-Vg-jWZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GAS-sv-qeX"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Qu1-Vg-jWZ" secondAttribute="bottom" id="D83-BH-7bb"/>
                             <constraint firstAttribute="trailing" secondItem="Qu1-Vg-jWZ" secondAttribute="trailing" id="OoW-TY-Axn"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Qu1-Vg-jWZ" secondAttribute="bottom" id="XSG-mV-3t7"/>
+                            <constraint firstItem="Qu1-Vg-jWZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="S0R-aZ-o1m"/>
                             <constraint firstItem="Qu1-Vg-jWZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xes-jc-ZLC"/>
                         </constraints>
                     </view>
@@ -115,7 +116,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tKF-BR-dJm" id="qra-zn-3tq">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="86.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="87"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w57-lW-lqf">
@@ -191,7 +192,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XoF-ix-U3k">
             <objects>
-                <navigationController storyboardIdentifier="RootNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="fGo-e4-5kd" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="RootNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="fGo-e4-5kd" customClass="WMNavigationController" customModule="WeatherMan" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NHy-XU-OYC">
@@ -205,4 +206,7 @@
             <point key="canvasLocation" x="364" y="325"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="sunny" width="128" height="128"/>
+    </resources>
 </document>

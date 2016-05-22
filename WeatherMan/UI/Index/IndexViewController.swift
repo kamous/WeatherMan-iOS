@@ -10,9 +10,12 @@ import UIKit
 import SnapKit
 import KGFloatingDrawer
 import Alamofire
+import ObjectMapper
 
 class IndexViewController: WMBaseViewController {
     var headerView :IndexHeaderView? = nil
+    var cityData :CityData?
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,16 +41,35 @@ class IndexViewController: WMBaseViewController {
         
     }
     
+    func updateHeaderView(){
+        self.headerView?.titleLabel.text = self.cityData?.currentCity
+        self.headerView?.subTitleLabel.hidden = true
+    }
+    
     func loadData(){
-        var urlStr = "http://api.map.baidu.com/telematics/v3/weather?location=北京&output=json&ak=\(BaiduManager.appKey)&mcode=com.kamous.WeatherMan"
+        var urlStr = "http://api.map.baidu.com/telematics/v3/weather?location=杭州&output=json&ak=\(BaiduManager.appKey)&mcode=com.kamous.WeatherMan"
         urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponse) in
+        WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
             if response.isSuccess{
-                print("Success:\(response.data)")
+                var result = Mapper<WeatherResult>().map(response.data)
+                self.cityData = result?.results?.first
+                self.saveDataSource()
+                self.tableView.reloadData()
+                self.updateHeaderView()
+//                print("Success:\(response.data)")
             }else{
                 print("Failed:\(response.data)")
             }
         }
+    }
+    
+    func saveDataSource(){
+        let dic = self.cityData?.toJSON()
+        if let dataDic = dic {
+//            let data = NSKeyedArchiver.archivedDataWithRootObject(dataDic)
+            NSUserDefaults.standardUserDefaults().setObject(dataDic, forKey: "CurentCity")
+        }
+        
     }
     
     // MARK: - Action
@@ -77,8 +99,10 @@ extension IndexViewController: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("weatherPicCell", forIndexPath: indexPath)
+        let cell:WeatherInfoCell = tableView.dequeueReusableCellWithIdentifier("WeatherInfoCell", forIndexPath: indexPath) as! WeatherInfoCell
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+        let weather : WeatherData? = self.cityData?.weatherDatas?[0]
+        cell.bindWithWeatherData(weather)
         return cell
         
     }

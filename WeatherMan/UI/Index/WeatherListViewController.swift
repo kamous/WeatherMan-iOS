@@ -7,13 +7,23 @@
 //
 
 import UIKit
+import ObjectMapper
 
 class WeatherListViewController: WMBaseViewController {
-
+    var cityDatas:[CityData]? = nil
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.initDataSource()
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,16 +31,18 @@ class WeatherListViewController: WMBaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+// MARK: - 私有
+    func initDataSource(){
+        if self.cityDatas == nil {
+            let dic = NSUserDefaults.standardUserDefaults().objectForKey("CurentCity") as? [String:AnyObject]
+            let curCity = Mapper<CityData>().map(dic)
+            if let c = curCity {
+                self.cityDatas = [c]
+            }
+            
+        }
     }
-    */
+    
 
 }
 
@@ -38,13 +50,33 @@ class WeatherListViewController: WMBaseViewController {
 // MARK: - UITableView
 extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2;
+        if let citys = self.cityDatas{
+        	return citys.count
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cityCell", forIndexPath: indexPath)
-        
+        let cell:CityWetaherInfoCell = tableView.dequeueReusableCellWithIdentifier("CityWetaherInfoCell", forIndexPath: indexPath) as! CityWetaherInfoCell
+        let city = self.cityDatas?[indexPath.row]
+        cell.bindWithCityData(city)
         return cell
         
     }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            
+        }
+    }
+    
+    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+        return "删除"
+    }
+    
+    
 }

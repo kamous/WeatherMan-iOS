@@ -41,23 +41,28 @@ public struct WMNetwork {
                           parameters: [String: AnyObject]? = nil,
                           encoding: ParameterEncoding = .URL,
                           var headers: [String: String]? = nil,
-                              completionHandler: WMResponse -> Void)
+                              completionHandler: WMResponseProtocol -> Void)
     {
         headers = WMNetwork.hundleHttpHeader(headers)
         
         Alamofire.request(method, URLString, parameters: parameters, encoding: encoding, headers: headers).responseJSON {
             (response: Response<AnyObject, NSError>) -> Void in
             
-            var res: WMResponse?
+            var res: WMResponseProtocol?
             
             switch response.result {
             case .Success(let v):
-                res = Mapper<WMResponse>().map(v)
+//                if URLString.URLString.rangeOfString("baidu.com"){
+//                    res = Mapper<WMResponse>().map(v)
+//                }else if res is WMWeatherResponse{
+                    res = Mapper<WMWeatherResponse>().map(v)
+//                }
+                
                 
                 print("\(res)")
                 
                 if res == nil {
-//                    res = WMResponse(isSuccess: false, msg: error.localizedDescription, code:error.code, data:nil)
+                    res = WMResponse(isSuccess: false, msg: "网络错误", code:100, data:nil)
                 } else {
                 }
                 

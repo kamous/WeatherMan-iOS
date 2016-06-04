@@ -15,6 +15,7 @@ class CityWetaherInfoCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = UIColor.clearColor()
         // Initialization code
     }
 

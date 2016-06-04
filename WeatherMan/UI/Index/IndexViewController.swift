@@ -23,6 +23,9 @@ class IndexViewController: WMBaseViewController {
         self.initHeaderView()
         
         self.loadData()
+        
+        let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(IndexViewController.onSwipeGesture(_:)))
+        self.view.addGestureRecognizer(swipeGesture)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,6 +33,7 @@ class IndexViewController: WMBaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK:私有方法
     func initHeaderView(){
         let headerView :IndexHeaderView = NSBundle.mainBundle().loadNibNamed("IndexHeaderView", owner: self, options: nil)[0] as! IndexHeaderView
         self.view.addSubview(headerView)
@@ -72,18 +76,29 @@ class IndexViewController: WMBaseViewController {
         
     }
     
-    // MARK: - Action
-    @IBAction func onLeftButtonPressed(sender: AnyObject) {
+    func jumpToLeftVC(){
         let rootNav = UIApplication.sharedApplication().keyWindow?.rootViewController as! UINavigationController
         let rootVC = rootNav.viewControllers[0] as! RootViewController
         rootVC.openDrawer(KGDrawerSide.Left, animated: true) { (finished) in
             
         }
+    }
+    
+    // MARK: - Action
+    @IBAction func onLeftButtonPressed(sender: AnyObject) {
         
+        self.jumpToLeftVC()
         
     }
     @IBAction func onRightButtonPressed(sender: AnyObject) {
         IndicatorView.showString("正在开发中。。。")
+    }
+    
+    func onSwipeGesture(ges: UISwipeGestureRecognizer){
+        if ges.direction == UISwipeGestureRecognizerDirection.Right {
+            self.jumpToLeftVC()
+        }
+        
     }
 }
 

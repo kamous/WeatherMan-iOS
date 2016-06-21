@@ -30,8 +30,14 @@ class WeatherInfoCell: UITableViewCell {
             self.weatherLabel.text = weather.weather
             self.infoLabel.text = weather.wind
         }
-        
-        
+    }
+    
+    func bindWithWeatherRealTime(weatherData:WeatherRealTime?){
+        if let weather = weatherData{
+            self.temperatureLabel.text = String(format:"%.1f°",weather.temperature!)
+            self.weatherLabel.text = "\(weather.skyconStr)"
+            self.infoLabel.text = String(format:"PM25:%.2f",weather.pm25!)
+        }
     }
 
 }

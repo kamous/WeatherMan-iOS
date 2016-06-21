@@ -55,9 +55,9 @@ public struct WMNetwork {
 //                if URLString.URLString.rangeOfString("baidu.com"){
 //                    res = Mapper<WMResponse>().map(v)
 //                }else if res is WMWeatherResponse{
-                    res = Mapper<WMWeatherResponse>().map(v)
+//                    res = Mapper<WMWeatherResponse>().map(v)
 //                }
-                
+                res = Mapper<WMCYWeatherResponse>().map(v)
                 
                 print("\(res)")
                 

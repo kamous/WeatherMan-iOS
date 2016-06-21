@@ -29,6 +29,7 @@
 		58DE26311CCFC906004AA189 /* WMResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DE26301CCFC906004AA189 /* WMResponse.swift */; };
 		58DE26331CCFC94C004AA189 /* WMNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DE26321CCFC94C004AA189 /* WMNetwork.swift */; };
 		58DE26361CCFCD8F004AA189 /* BaiduManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DE26351CCFCD8F004AA189 /* BaiduManager.swift */; };
+		58FE6E5D1D16679400409657 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE6E5C1D16679400409657 /* WeatherModel.swift */; };
 		5ADE90D533C447AB05228B48 /* Pods_WeatherMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 163436A09BEC39A243D3BB47 /* Pods_WeatherMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		58DE26301CCFC906004AA189 /* WMResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMResponse.swift; sourceTree = "<group>"; };
 		58DE26321CCFC94C004AA189 /* WMNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMNetwork.swift; sourceTree = "<group>"; };
 		58DE26351CCFCD8F004AA189 /* BaiduManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaiduManager.swift; sourceTree = "<group>"; };
+		58FE6E5C1D16679400409657 /* WeatherModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 		584DB06B1CCE6CC80078A564 /* Index */ = {
 			isa = PBXGroup;
 			children = (
+				58FE6E5B1D16677200409657 /* Model */,
 				584DB0761CCE73D80078A564 /* View */,
 				584DB0701CCE6CED0078A564 /* IndexViewController.swift */,
 				584DB0721CCE6E260078A564 /* WeatherListViewController.swift */,
@@ -256,6 +259,14 @@
 				58DE26351CCFCD8F004AA189 /* BaiduManager.swift */,
 			);
 			path = Baidu;
+			sourceTree = "<group>";
+		};
+		58FE6E5B1D16677200409657 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				58FE6E5C1D16679400409657 /* WeatherModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BD49999BEF71779EDB6B1317 /* Frameworks */ = {
@@ -464,6 +475,7 @@
 				58BF35EE1CE0E73000DEDFA5 /* DataDef.swift in Sources */,
 				58DE26331CCFC94C004AA189 /* WMNetwork.swift in Sources */,
 				584DB03D1CCE66260078A564 /* AppDelegate.swift in Sources */,
+				58FE6E5D1D16679400409657 /* WeatherModel.swift in Sources */,
 				584DB07C1CCE7A050078A564 /* BaseViewController.swift in Sources */,
 				584DB0711CCE6CED0078A564 /* IndexViewController.swift in Sources */,
 			);

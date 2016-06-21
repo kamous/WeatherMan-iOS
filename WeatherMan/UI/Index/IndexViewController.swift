@@ -12,9 +12,13 @@ import KGFloatingDrawer
 import Alamofire
 import ObjectMapper
 
+let CYToken = "s2Z8DUdCylyrd=8k"
+
 class IndexViewController: WMBaseViewController {
     var headerView :IndexHeaderView? = nil
     var cityData :CityData?
+//    var dataModel :WeatherModel = WeatherModel.shareInstance
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -22,7 +26,8 @@ class IndexViewController: WMBaseViewController {
         
         self.initHeaderView()
         
-        self.loadData()
+//        self.loadData()
+        self.loadCYData()
         
         let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(IndexViewController.onSwipeGesture(_:)))
         self.view.addGestureRecognizer(swipeGesture)
@@ -33,7 +38,7 @@ class IndexViewController: WMBaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK:私有方法
+    //MARK: - 私有方法
     func initHeaderView(){
         let headerView :IndexHeaderView = NSBundle.mainBundle().loadNibNamed("IndexHeaderView", owner: self, options: nil)[0] as! IndexHeaderView
         self.view.addSubview(headerView)
@@ -64,6 +69,13 @@ class IndexViewController: WMBaseViewController {
             }else{
                 print("Failed:\(response.data)")
             }
+        }
+    }
+    
+    func loadCYData(){
+        WeatherModel.shareInstance.loadData { (isSuccess:Bool) in
+            self.tableView.reloadData()
+            self.updateHeaderView()
         }
     }
     
@@ -116,8 +128,9 @@ extension IndexViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:WeatherInfoCell = tableView.dequeueReusableCellWithIdentifier("WeatherInfoCell", forIndexPath: indexPath) as! WeatherInfoCell
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-        let weather : WeatherData? = self.cityData?.weatherDatas?[0]
-        cell.bindWithWeatherData(weather)
+//        let weather : WeatherData? = self.cityData?.weatherDatas?[0]
+//        cell.bindWithWeatherData(weather)
+        cell.bindWithWeatherRealTime(WeatherModel.shareInstance.weatherRealTime)
         return cell
         
     }

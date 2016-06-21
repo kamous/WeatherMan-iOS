@@ -41,7 +41,57 @@ public struct WMResponse: Mappable,WMResponseProtocol{
     }
 }
 
+/**
+ *	彩云天气返回
+ */
+public struct WMCYWeatherResponse: WMResponseProtocol,Mappable {
+    public var isSuccess:Bool = false
+    public var msg:String?
+    public var code:Int?
+    public var data:AnyObject?
+    
+    var status:String? {
+        willSet(newStatus){
+            if newStatus == "ok" {
+                isSuccess = true
+            }
+        }
+    }
+    var result:AnyObject?{
+        willSet(newResults){
+            if let result = newResults {
+                data = ["result":result]
+            }
+            
+        }
+    }
+    
+    public init?(_ map:Map){
+        
+    }
+    
+//    init(isSuccess: Bool, msg: String?, code :Int?, data: AnyObject?){
+//        
+//        self.isSuccess = isSuccess
+//        self.msg = msg
+//        self.code = code
+//        self.data = data
+//    }
+    
+    public mutating func mapping(map: Map) {
+        isSuccess		<- map["successful"]
+        msg				<- map["error"]
+        code			<- map["error"]
+        data			<- map["data"]
+        status			<- map["status"]
+        result			<- map["result"]
+    }
+}
 
+
+/**
+ *  百度天气返回
+ */
 public struct WMWeatherResponse: WMResponseProtocol,Mappable {
     public var isSuccess:Bool = false
     public var msg:String?
@@ -68,13 +118,13 @@ public struct WMWeatherResponse: WMResponseProtocol,Mappable {
         
     }
     
-//    init(isSuccess: Bool, msg: String?, code :Int?, data: AnyObject?){
-//        
-//        self.isSuccess = isSuccess
-//        self.msg = msg
-//        self.code = code
-//        self.data = data
-//    }
+    //    init(isSuccess: Bool, msg: String?, code :Int?, data: AnyObject?){
+    //
+    //        self.isSuccess = isSuccess
+    //        self.msg = msg
+    //        self.code = code
+    //        self.data = data
+    //    }
     
     public mutating func mapping(map: Map) {
         isSuccess		<- map["successful"]

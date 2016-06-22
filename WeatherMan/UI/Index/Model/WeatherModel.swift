@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import ObjectMapper
+import CoreLocation
 
 struct WeatherModel {
     
@@ -18,8 +19,8 @@ struct WeatherModel {
     
     private init(){}
     
-    mutating func loadData(completion:(Bool -> Void)){
-        var urlStr = "https://api.caiyunapp.com/v2/\(CYToken)/121.6544,25.1552/realtime.json"
+    mutating func loadData(coordiinate:CLLocationCoordinate2D, completion:(Bool -> Void)){
+        var urlStr = "https://api.caiyunapp.com/v2/\(CYToken)/\(coordiinate.longitude),\(coordiinate.latitude)/realtime.json"
         urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
             if response.isSuccess{

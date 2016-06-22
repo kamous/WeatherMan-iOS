@@ -36,7 +36,7 @@ class WeatherInfoCell: UITableViewCell {
         if let weather = weatherData{
             self.temperatureLabel.text = String(format:"%.1f°",weather.temperature!)
             self.weatherLabel.text = "\(weather.skyconStr)"
-            self.infoLabel.text = String(format:"PM25:%.2f",weather.pm25!)
+            self.infoLabel.text = String(format:"PM25:%.0f",weather.pm25!)
         }
     }
 

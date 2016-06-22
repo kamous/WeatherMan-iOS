@@ -11,6 +11,7 @@ import SnapKit
 import KGFloatingDrawer
 import Alamofire
 import ObjectMapper
+import CoreLocation
 
 let CYToken = "s2Z8DUdCylyrd=8k"
 
@@ -25,6 +26,10 @@ class IndexViewController: WMBaseViewController {
         super.viewDidLoad()
         
         self.initHeaderView()
+        
+		LocationManager.shareManager.addObserver(self, forKeyPath: kLocationManagerLocation, options:NSKeyValueObservingOptions.New, context: nil)
+        LocationManager.shareManager.addObserver(self, forKeyPath: kLocationManagerPlacemark, options:NSKeyValueObservingOptions.New, context: nil)
+        
         
 //        self.loadData()
         self.loadCYData()
@@ -51,8 +56,24 @@ class IndexViewController: WMBaseViewController {
     }
     
     func updateHeaderView(){
-        self.headerView?.titleLabel.text = self.cityData?.currentCity
-        self.headerView?.subTitleLabel.hidden = true
+        
+        if LocationManager.shareManager.placemark == nil {
+            if let placemark = LocationManager.shareManager.lastPlacemark() {
+                LocationManager.shareManager.placemark = placemark
+
+            }
+        }
+        
+        var cityName = LocationManager.shareManager.placemark?.locality
+        if cityName == nil {
+            cityName = LocationManager.shareManager.placemark?.administrativeArea
+        }
+        if cityName == nil {
+            cityName = LocationManager.shareManager.placemark?.name
+        }
+        self.headerView?.titleLabel.text = cityName
+        self.headerView?.subTitleLabel.text = LocationManager.shareManager.placemark?.thoroughfare
+//        self.headerView?.subTitleLabel.hidden = true
     }
     
     func loadData(){
@@ -73,7 +94,14 @@ class IndexViewController: WMBaseViewController {
     }
     
     func loadCYData(){
-        WeatherModel.shareInstance.loadData { (isSuccess:Bool) in
+        var loc = LocationManager.shareManager.location
+        if (loc == nil) {
+            loc = LocationManager.shareManager.lastLocation()
+            if (loc == nil){
+                loc = CLLocation(latitude:25.1552 ,longitude:121.6544)
+            }
+        }
+        WeatherModel.shareInstance.loadData(loc!.coordinate) { (isSuccess:Bool) in
             self.tableView.reloadData()
             self.updateHeaderView()
         }
@@ -95,6 +123,17 @@ class IndexViewController: WMBaseViewController {
             
         }
     }
+    
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if keyPath == kLocationManagerLocation {
+            self.loadCYData()
+        }else if keyPath == kLocationManagerPlacemark{
+            self.updateHeaderView()
+        }
+    }
+    
+    
     
     // MARK: - Action
     @IBAction func onLeftButtonPressed(sender: AnyObject) {

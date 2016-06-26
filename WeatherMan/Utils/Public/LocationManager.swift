@@ -100,5 +100,22 @@ class LocationManager:NSObject, CLLocationManagerDelegate{
         }
     }
     
+    func codeAddressToLocation(address:String,completion:(placemarks:[CLPlacemark]?) -> Void){
+
+        
+        if (address.characters.count < 0){
+        	completion(placemarks: nil)
+        }
+        
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { (places :[CLPlacemark]?, error: NSError?) in
+            
+            if error == nil && places != nil{
+                completion(placemarks: places)
+            }
+            
+        }
+    }
+    
     
 }

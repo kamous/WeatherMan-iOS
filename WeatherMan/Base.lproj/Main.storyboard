@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fGo-e4-5kd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fGo-e4-5kd">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -208,6 +208,52 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="textField" destination="xkY-Wo-aKT" id="S6N-i8-Pi1"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CityNameCell" rowHeight="44" id="h9H-89-2ra" customClass="CityNameCell" customModule="WeatherMan" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="163" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h9H-89-2ra" id="wFM-pg-lpP">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qdx-4G-F8D">
+                                                    <rect key="frame" x="20" y="10" width="48" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyt-rE-GSh">
+                                                    <rect key="frame" x="78" y="15" width="35" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MjD-VX-Fer">
+                                                    <rect key="frame" x="0.0" y="43" width="600" height="1"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="KU6-1l-BUS"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="nyt-rE-GSh" firstAttribute="leading" secondItem="Qdx-4G-F8D" secondAttribute="trailing" constant="10" id="AcD-B8-wl2"/>
+                                                <constraint firstItem="MjD-VX-Fer" firstAttribute="leading" secondItem="wFM-pg-lpP" secondAttribute="leading" id="P9I-q7-7As"/>
+                                                <constraint firstAttribute="trailing" secondItem="MjD-VX-Fer" secondAttribute="trailing" id="ShF-GY-XaK"/>
+                                                <constraint firstAttribute="bottom" secondItem="MjD-VX-Fer" secondAttribute="bottom" id="kqt-WC-xoZ"/>
+                                                <constraint firstItem="nyt-rE-GSh" firstAttribute="baseline" secondItem="Qdx-4G-F8D" secondAttribute="baseline" id="ktG-uB-9UI"/>
+                                                <constraint firstItem="Qdx-4G-F8D" firstAttribute="leading" secondItem="wFM-pg-lpP" secondAttribute="leading" constant="20" id="pLD-DH-oWu"/>
+                                                <constraint firstItem="Qdx-4G-F8D" firstAttribute="centerY" secondItem="wFM-pg-lpP" secondAttribute="centerY" id="ql8-Q8-wwU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="infoLabel" destination="Qdx-4G-F8D" id="Mwt-ZP-NUd"/>
+                                            <outlet property="subInfoLabel" destination="nyt-rE-GSh" id="yeT-O8-edB"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

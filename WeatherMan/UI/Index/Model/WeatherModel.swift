@@ -19,8 +19,8 @@ struct WeatherModel {
     
     private init(){}
     
-    mutating func loadData(coordiinate:CLLocationCoordinate2D, completion:(Bool -> Void)){
-        var urlStr = "https://api.caiyunapp.com/v2/\(CYToken)/\(coordiinate.longitude),\(coordiinate.latitude)/realtime.json"
+    mutating func loadData(latitude: Double, longitude: Double, completion:(Bool -> Void)){
+        var urlStr = "https://api.caiyunapp.com/v2/\(CYToken)/\(longitude),\(latitude)/realtime.json"
         urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
             if response.isSuccess{

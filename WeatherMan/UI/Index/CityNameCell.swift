@@ -18,7 +18,7 @@ class CityNameCell: UITableViewCell {
         self.backgroundColor = UIColor.clearColor()
     }
     
-    func bindWithPlacemark(placemark:CLPlacemark?){
+    func bindWithPlacemark(placemark:Placemark?){
         if let place = placemark{
             var city = place.name
             if city == nil {

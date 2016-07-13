@@ -17,7 +17,7 @@ let CYToken = "s2Z8DUdCylyrd=8k"
 
 class IndexViewController: WMBaseViewController {
     var headerView :IndexHeaderView? = nil
-    var cityData :CityData?
+    var cityInfo: CityInfo?
 //    var dataModel :WeatherModel = WeatherModel.shareInstance
     
     @IBOutlet weak var tableView: UITableView!
@@ -56,65 +56,42 @@ class IndexViewController: WMBaseViewController {
     }
     
     func updateHeaderView(){
-        
-        if LocationManager.shareManager.placemark == nil {
-            if let placemark = LocationManager.shareManager.lastPlacemark() {
-                LocationManager.shareManager.placemark = placemark
 
-            }
-        }
-        
-        var cityName = LocationManager.shareManager.placemark?.locality
-        if cityName == nil {
-            cityName = LocationManager.shareManager.placemark?.administrativeArea
-        }
-        if cityName == nil {
-            cityName = LocationManager.shareManager.placemark?.name
-        }
-        self.headerView?.titleLabel.text = cityName
-        self.headerView?.subTitleLabel.text = LocationManager.shareManager.placemark?.thoroughfare
-//        self.headerView?.subTitleLabel.hidden = true
+        self.headerView?.titleLabel.text = self.cityInfo?.placemark?.name
+        self.headerView?.subTitleLabel.text = self.cityInfo?.placemark?.thoroughfare
     }
     
-    func loadData(){
-        var urlStr = "http://api.map.baidu.com/telematics/v3/weather?location=杭州&output=json&ak=\(BaiduManager.appKey)&mcode=com.kamous.WeatherMan"
-        urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
-            if response.isSuccess{
-                var result = Mapper<WeatherResult>().map(response.data)
-                self.cityData = result?.results?.first
-                self.saveDataSource()
-                self.tableView.reloadData()
-                self.updateHeaderView()
-//                print("Success:\(response.data)")
-            }else{
-                print("Failed:\(response.data)")
-            }
-        }
-    }
+//    func loadData(){
+//        var urlStr = "http://api.map.baidu.com/telematics/v3/weather?location=杭州&output=json&ak=\(BaiduManager.appKey)&mcode=com.kamous.WeatherMan"
+//        urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+//        WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
+//            if response.isSuccess{
+//                var result = Mapper<WeatherResult>().map(response.data)
+//                self.cityData = result?.results?.first
+//                self.saveDataSource()
+//                self.tableView.reloadData()
+//                self.updateHeaderView()
+////                print("Success:\(response.data)")
+//            }else{
+//                print("Failed:\(response.data)")
+//            }
+//        }
+//    }
     
     func loadCYData(){
-        var loc = LocationManager.shareManager.location
-        if (loc == nil) {
-            loc = LocationManager.shareManager.lastLocation()
-            if (loc == nil){
-                loc = CLLocation(latitude:25.1552 ,longitude:121.6544)
+ 
+        self.cityInfo = CityManager.shareManager.getCurCity()
+//        self.saveDataSource()
+        WeatherModel.shareInstance.loadData((cityInfo?.location?.latitude)!, longitude: (cityInfo?.location?.longitude)!) { (isSuccess:Bool) in
+            if let weather = WeatherModel.shareInstance.weatherRealTime{
+                self.cityInfo?.weather = weather
+                CityManager.shareManager.saveCurCity(self.cityInfo)
             }
-        }
-        WeatherModel.shareInstance.loadData(loc!.coordinate) { (isSuccess:Bool) in
             self.tableView.reloadData()
             self.updateHeaderView()
         }
     }
     
-    func saveDataSource(){
-        let dic = self.cityData?.toJSON()
-        if let dataDic = dic {
-//            let data = NSKeyedArchiver.archivedDataWithRootObject(dataDic)
-            NSUserDefaults.standardUserDefaults().setObject(dataDic, forKey: "CurentCity")
-        }
-        
-    }
     
     func jumpToLeftVC(){
         let rootNav = UIApplication.sharedApplication().keyWindow?.rootViewController as! UINavigationController
@@ -129,6 +106,8 @@ class IndexViewController: WMBaseViewController {
         if keyPath == kLocationManagerLocation {
             self.loadCYData()
         }else if keyPath == kLocationManagerPlacemark{
+            self.cityInfo?.placemark = Placemark(placemark: LocationManager.shareManager.placemark)
+            CityManager.shareManager.saveCurCity(self.cityInfo)
             self.updateHeaderView()
         }
     }
@@ -169,7 +148,7 @@ extension IndexViewController: UITableViewDelegate,UITableViewDataSource{
         cell.selectionStyle = UITableViewCellSelectionStyle.None
 //        let weather : WeatherData? = self.cityData?.weatherDatas?[0]
 //        cell.bindWithWeatherData(weather)
-        cell.bindWithWeatherRealTime(WeatherModel.shareInstance.weatherRealTime)
+        cell.bindWithWeatherRealTime(self.cityInfo?.weather)
         return cell
         
     }

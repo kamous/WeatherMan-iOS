@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+import CoreLocation
 
 //MARK:- Baidu
 struct WeatherData: Mappable{
@@ -168,3 +169,139 @@ struct WeatherRealTimeResult:Mappable{
         result		<- map["result"]
     }
 }
+
+//struct PlacemarkInfo:Mappable{
+//    public var name: String? { get } // eg. Apple Inc.
+//    public var thoroughfare: String? { get } // street name, eg. Infinite Loop
+//    public var subThoroughfare: String? { get } // eg. 1
+//    public var locality: String? { get } // city, eg. Cupertino
+//    public var subLocality: String? { get } // neighborhood, common name, eg. Mission District
+//    public var administrativeArea: String? { get } // state, eg. CA
+//    public var subAdministrativeArea: String? { get } // county, eg. Santa Clara
+//    public var postalCode: String? { get } // zip code, eg. 95014
+//    public var ISOcountryCode: String? { get } // eg. US
+//    public var country: String? { get } // eg. United States
+//    public var inlandWater: String? { get } // eg. Lake Tahoe
+//    public var ocean: String? { get } // eg. Pacific Ocean
+//    public var areasOfInterest: [String]? { get } // eg. Golden Gate Park
+//    
+//    
+//    init?(_ map:Map){
+//        
+//    }
+//    
+//    init(){
+//        
+//    }
+//    mutating func mapping(map: Map) {
+//        name		<- map["name"]
+//        placemark	<- map["placemark"]
+//        location	<- map["location"]
+//        weather		<- map["weather"]
+//    }
+//}
+
+struct LocationInfo:Mappable{
+    var latitude: Double = 0
+    var longitude: Double = 0
+    
+    init?(_ map:Map){
+        
+    }
+    
+    init(){
+        
+    }
+    
+    init(latitude: Double, longitude: Double){
+        self.init()
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
+    init(location:CLLocation?){
+        self.init()
+        if let loc = location {
+            self.latitude = loc.coordinate.latitude
+            self.longitude = loc.coordinate.longitude
+        }
+        
+    }
+    
+    mutating func mapping(map: Map) {
+        latitude	<- map["latitude"]
+        longitude	<- map["longitude"]
+    }
+}
+
+
+struct Placemark:Mappable{
+    var name: String?
+    var thoroughfare: String?
+    var locality: String?
+    var administrativeArea: String?
+    
+    init?(_ map:Map){
+        
+    }
+    
+    init(){
+        
+    }
+    
+    init(placemark:CLPlacemark?){
+        self.init()
+        if let place = placemark {
+            self.name = place.name
+            self.thoroughfare = place.thoroughfare
+            self.locality = place.locality
+            self.administrativeArea = place.administrativeArea
+        }
+        
+    }
+    
+    mutating func mapping(map: Map) {
+        name	<- map["name"]
+        thoroughfare	<- map["thoroughfare"]
+        locality	<- map["locality"]
+        administrativeArea	<- map["thoroughfare"]
+    }
+}
+
+struct CityInfo:Mappable{
+
+    var placemark: Placemark?//CLPlacemark?
+    var location: LocationInfo?//CLLocation?
+    var weather: WeatherRealTime?
+    
+    var name: String?{
+        get{
+			var cityName = self.placemark?.locality
+            if cityName == nil {
+                cityName = self.placemark?.administrativeArea
+            }
+            if cityName == nil {
+                cityName = self.placemark?.name
+            }
+            return cityName
+        }
+            set{
+                
+            }
+    }
+    
+    init?(_ map:Map){
+        
+    }
+    
+    init(){
+        
+    }
+    mutating func mapping(map: Map) {
+        name		<- map["name"]
+        placemark	<- map["placemark"]
+        location	<- map["location"]
+        weather		<- map["weather"]
+    }
+}
+

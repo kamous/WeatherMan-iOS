@@ -17,8 +17,8 @@ let kWeatherInfoSection = "WeatherInfoSection"
 let kCityNameSection = "kCityNameSection"
 
 class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegate {
-    var cityDatas:[CityData]? = nil
-    var cityNames:[CLPlacemark]? = nil
+    var cityList:[CityInfo]? = nil
+    var cityNames:[Placemark]? = nil
     var dataSource:[String] = [String]()
     var isShowInputView = false
     var isCitySelectMode = false
@@ -40,6 +40,11 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
 //        let swipeGestureRecognizer = UISwipeGestureRecognizer.init(target: self, action: #selector(WeatherListViewController.onSwipeGesture(_:)))
 ////        swipeGestureRecognizer.delegate = self
 //        self.tableView.addGestureRecognizer(swipeGestureRecognizer)
+        
+        
+        CityManager.shareManager.addObserver(self, forKeyPath: kCityManagerCurCity, options:NSKeyValueObservingOptions.New, context: nil)
+        
+        LocationManager.shareManager.addObserver(self, forKeyPath: kLocationManagerLocation, options:NSKeyValueObservingOptions.New, context: nil)
         
     }
     
@@ -66,15 +71,16 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
     
 // MARK: - 私有
     func initData(){
-        if self.cityDatas == nil {
-            let dic = NSUserDefaults.standardUserDefaults().objectForKey("CurentCity") as? [String:AnyObject]
-            let curCity = Mapper<CityData>().map(dic)
+        self.cityList = CityManager.shareManager.cityList
+        if self.cityList == nil {
+            let dic = NSUserDefaults.standardUserDefaults().objectForKey(kCityManagerCurCity) as? [String:AnyObject]
+            let curCity = Mapper<CityInfo>().map(dic)
             if let c = curCity {
-                self.cityDatas = [c]
+                self.cityList = [c]
             }
             
         }
-            }
+    }
     
     func initDataSource(){
         self.dataSource.removeAll()
@@ -124,6 +130,14 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
 //    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
 //        return true
 //    }
+    
+// MARK: - KVO
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if keyPath == kCityManagerCurCity {
+            self.initData()
+            self.tableView.reloadData()
+        }
+    }
 
 }
 
@@ -151,7 +165,7 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
                 return 1
             }
         }else if sectionName == kWeatherInfoSection{
-            if let citys = self.cityDatas{
+            if let citys = self.cityList{
                 return citys.count
             }
         }else if sectionName == kCityNameSection{
@@ -184,8 +198,8 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
             return cell
         }else if sectionName == kWeatherInfoSection {
             let cell:CityWetaherInfoCell = tableView.dequeueReusableCellWithIdentifier("CityWetaherInfoCell", forIndexPath: indexPath) as! CityWetaherInfoCell
-            let city = self.cityDatas?[indexPath.row]
-            cell.bindWithCityData(city)
+            let city = self.cityList?[indexPath.row]
+            cell.bindWithCityInfo(city)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }else if sectionName == kCityNameSection {
@@ -203,6 +217,7 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sectionName = self.sectionNameOfSection(indexPath.section)
         if sectionName == kCityNameSection {
+            let city:Placemark = self.cityNames![indexPath.row]
             
         }
     }
@@ -238,7 +253,14 @@ extension WeatherListViewController:UITextFieldDelegate{
                 if let places = placemarks{
 //                    print("[[[[L:%f,%f",loc.coordinate.latitude,loc.coordinate.longitude)
                     self.isCitySelectMode = true
-                    self.cityNames = places
+                    
+                    var cityNames = [Placemark]()
+                    for placemark in places{
+                        let place = Placemark(placemark: placemark)
+                        cityNames.append(place)
+                    }
+                    self.cityNames = cityNames
+                    
                     self.initDataSource()
                     self.tableView.reloadData()
                 }

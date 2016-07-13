@@ -25,13 +25,15 @@ class CityWetaherInfoCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func bindWithCityData(cityData:CityData?){
-        self.cityLabel.text = cityData?.currentCity
+    func bindWithCityInfo(cityInfo:CityInfo?){
+        self.cityLabel.text = cityInfo?.name
         
-        let weather = cityData?.weatherDatas?[0]
+//        let weather = cityInfo?.weatherDatas?[0]
+        if let weather =  cityInfo?.weather{
+            self.temperatureLabel.text = String(format:"%.1f°",weather.temperature!)
+            self.subLabel.text = "\(weather.skyconStr)"
+        }
         
-        self.temperatureLabel.text = weather?.temperature
-        self.subLabel.text = weather?.weather
     }
 
 }

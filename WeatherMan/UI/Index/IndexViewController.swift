@@ -57,7 +57,7 @@ class IndexViewController: WMBaseViewController {
     
     func updateHeaderView(){
 
-        self.headerView?.titleLabel.text = self.cityInfo?.placemark?.name
+        self.headerView?.titleLabel.text = self.cityInfo?.name
         self.headerView?.subTitleLabel.text = self.cityInfo?.placemark?.thoroughfare
     }
     
@@ -121,7 +121,8 @@ class IndexViewController: WMBaseViewController {
         
     }
     @IBAction func onRightButtonPressed(sender: AnyObject) {
-        IndicatorView.showString("正在开发中。。。")
+        NSNotificationCenter.defaultCenter().postNotificationName(RootVCChangeBgNotification, object: nil)
+//        IndicatorView.showString("正在开发中。。。")
     }
     
     func onSwipeGesture(ges: UISwipeGestureRecognizer){

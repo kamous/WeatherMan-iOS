@@ -22,8 +22,12 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
     var dataSource:[String] = [String]()
     var isShowInputView = false
     var isCitySelectMode = false
-    
+    var inputTextField : UITextField? = nil
     @IBOutlet weak var tableView: UITableView!
+    
+    deinit{
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,18 +37,20 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
         effectView.snp_makeConstraints { (make) in
             make.edges.equalTo(self.view.snp_edges)
         }
-        let singTapGes = UITapGestureRecognizer.init(target: self, action: #selector(WeatherListViewController.onSwipeGesture(_:)))
-        singTapGes.delegate = self
+        let singTapGes = UITapGestureRecognizer.init(target: self, action: #selector(WeatherListViewController.onTapGesture(_:)))
         self.tableView.addGestureRecognizer(singTapGes)
         
-//        let swipeGestureRecognizer = UISwipeGestureRecognizer.init(target: self, action: #selector(WeatherListViewController.onSwipeGesture(_:)))
-////        swipeGestureRecognizer.delegate = self
-//        self.tableView.addGestureRecognizer(swipeGestureRecognizer)
+        let swipeGestureRecognizer = UISwipeGestureRecognizer.init(target: self, action: #selector(WeatherListViewController.onSwipeGesture(_:)))
+        swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+        self.tableView.addGestureRecognizer(swipeGestureRecognizer)
         
         
         CityManager.shareManager.addObserver(self, forKeyPath: kCityManagerCurCity, options:NSKeyValueObservingOptions.New, context: nil)
         
         LocationManager.shareManager.addObserver(self, forKeyPath: kLocationManagerLocation, options:NSKeyValueObservingOptions.New, context: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherListViewController.onCloseDrawNotification(_:)), name: RootVCCloseDrawerNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WeatherListViewController.onOpenDrawNotification(_:)), name: RootVCOpenDrawerNotification, object: nil)
         
     }
     
@@ -120,11 +126,16 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
         
     }
     
-    func onSwipeGesture(ges: UISwipeGestureRecognizer){
-//        if ges.direction == UISwipeGestureRecognizerDirection.Right {
-            self.jumpToCenterVC()
-//        }
+    func onTapGesture(ges:UITapGestureRecognizer ){
+		self.inputTextField?.resignFirstResponder()
         
+    }
+    
+    func onSwipeGesture(ges: UISwipeGestureRecognizer){
+        if ges.direction == UISwipeGestureRecognizerDirection.Left {
+            self.jumpToCenterVC()
+        }
+    
     }
     
 //    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -136,6 +147,28 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
         if keyPath == kCityManagerCurCity {
             self.initData()
             self.tableView.reloadData()
+        }
+    }
+    
+    
+// MARK: - NSNotification
+    func onCloseDrawNotification(notif: NSNotification){
+        if let s = notif.userInfo?[RootVCNotificationParamSide]{
+            let sideFloat = s as! CGFloat
+            let side = KGDrawerSide(rawValue: sideFloat)
+            if side == KGDrawerSide.Left {
+                self.inputTextField?.resignFirstResponder()
+            }
+        }
+    }
+    
+    func onOpenDrawNotification(notif: NSNotification){
+        if let s = notif.userInfo?[RootVCNotificationParamSide]{
+            let sideFloat = s as! CGFloat
+            let side = KGDrawerSide(rawValue: sideFloat)
+            if side == KGDrawerSide.Left {
+                self.tableView.reloadData()
+            }
         }
     }
 
@@ -194,6 +227,7 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
         if sectionName == kCityInputSection {
             let cell:CityInputTableViewCell = tableView.dequeueReusableCellWithIdentifier("CityInputTableViewCell", forIndexPath: indexPath) as! CityInputTableViewCell
            	cell.textField.delegate = self
+            self.inputTextField = cell.textField
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }else if sectionName == kWeatherInfoSection {

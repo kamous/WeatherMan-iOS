@@ -38,8 +38,8 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
             make.edges.equalTo(self.view.snp_edges)
         }
         let singTapGes = UITapGestureRecognizer.init(target: self, action: #selector(WeatherListViewController.onTapGesture(_:)))
-        self.tableView.addGestureRecognizer(singTapGes)
-        
+        self.view.addGestureRecognizer(singTapGes)
+        singTapGes.cancelsTouchesInView = false
         let swipeGestureRecognizer = UISwipeGestureRecognizer.init(target: self, action: #selector(WeatherListViewController.onSwipeGesture(_:)))
         swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
         self.tableView.addGestureRecognizer(swipeGestureRecognizer)
@@ -105,6 +105,13 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
         rootVC.closeDrawer(KGDrawerSide.Left, animated: true, complete: { (finished) in
             
         })
+    }
+    
+    func updateCityList(){
+        CityManager.shareManager.saveCityList(self.cityList)
+        self.isCitySelectMode = false
+        self.initDataSource()
+        self.tableView.reloadData()
     }
     
     // MARK: - action
@@ -251,7 +258,10 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sectionName = self.sectionNameOfSection(indexPath.section)
         if sectionName == kCityNameSection {
-            let city:Placemark = self.cityNames![indexPath.row]
+            var city:CityInfo = CityInfo()
+            city.placemark = self.cityNames![indexPath.row]
+            self.cityList?.append(city)
+            self.updateCityList()
             
         }
     }
@@ -259,7 +269,7 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         let sectionName = self.sectionNameOfSection(indexPath.section)
         
-        if sectionName == kWeatherInfoSection{
+        if sectionName == kWeatherInfoSection && indexPath.row > 0{
             return true
         }
         return false
@@ -267,7 +277,8 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            
+            self.cityList?.removeAtIndex(indexPath.row)
+            self.updateCityList()
         }
     }
     

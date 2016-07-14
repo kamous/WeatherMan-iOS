@@ -52,7 +52,7 @@ class IndexViewController: WMBaseViewController {
             make.height.equalTo(80)
         }
         self.headerView = headerView
-        
+        self.updateHeaderView()
     }
     
     func updateHeaderView(){

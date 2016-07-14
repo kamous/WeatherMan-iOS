@@ -32,6 +32,9 @@ class CityWetaherInfoCell: UITableViewCell {
         if let weather =  cityInfo?.weather{
             self.temperatureLabel.text = String(format:"%.1f°",weather.temperature!)
             self.subLabel.text = "\(weather.skyconStr)"
+        }else{
+            self.temperatureLabel.text = "--"
+            self.subLabel.text = ""
         }
         
     }

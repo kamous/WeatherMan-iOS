@@ -37,6 +37,10 @@ class WeatherInfoCell: UITableViewCell {
             self.temperatureLabel.text = String(format:"%.1f°",weather.temperature!)
             self.weatherLabel.text = "\(weather.skyconStr)"
             self.infoLabel.text = String(format:"PM25:%.0f",weather.pm25!)
+        }else{
+            self.temperatureLabel.text = "天若静好"
+            self.weatherLabel.text = "网络不佳"
+            self.infoLabel.text = ""
         }
     }
 

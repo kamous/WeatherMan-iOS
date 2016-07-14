@@ -11,6 +11,7 @@ import CoreLocation
 import ObjectMapper
 
 let kCityManagerCurCity = "curCity"
+let kCityManagerCityList = "cityList"
 
 class CityManager: NSObject {
     static let shareManager: CityManager = CityManager()
@@ -56,8 +57,22 @@ class CityManager: NSObject {
         
     }
     
+    func saveCityList(cityList: [CityInfo]?){
+        self.cityList = cityList
+        if let cities = cityList{
+            
+            let dic = cities.toJSON()
+            NSUserDefaults.standardUserDefaults().setObject(dic, forKey: kCityManagerCityList)
+        }
+        
+        
+    }
+
+    
     private override init(){
-        cityList = NSUserDefaults.standardUserDefaults().objectForKey("CityList") as? [CityInfo]
+        super.init()
+        let dic = NSUserDefaults.standardUserDefaults().objectForKey(kCityManagerCityList)
+        self.cityList = Mapper<CityInfo>().mapArray(dic)
         
     }
     

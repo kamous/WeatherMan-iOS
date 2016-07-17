@@ -12,6 +12,7 @@ import ObjectMapper
 
 let kCityManagerCurCity = "curCity"
 let kCityManagerCityList = "cityList"
+let kCityManagerCurCityIndex = "curCityIndex"
 
 class CityManager: NSObject {
     static let shareManager: CityManager = CityManager()
@@ -31,6 +32,37 @@ class CityManager: NSObject {
 //            
 //        }
 //    }
+    
+    
+    private override init(){
+        super.init()
+        let dic = NSUserDefaults.standardUserDefaults().objectForKey(kCityManagerCityList)
+        self.cityList = Mapper<CityInfo>().mapArray(dic)
+        
+    }
+    
+    func loadCityInfo() -> CityInfo{
+        var loc = LocationManager.shareManager.location
+        if (loc == nil) {
+            loc = LocationManager.shareManager.lastLocation()
+            if (loc == nil){
+                loc = CLLocation(latitude:25.1552 ,longitude:121.6544)
+            }
+        }
+        
+        var city = CityInfo()
+        city.location = LocationInfo(location: loc)
+        //        let dic = city.toJSON()
+        //        NSKeyedArchiver.archivedDataWithRootObject(<#T##rootObject: AnyObject##AnyObject#>)
+        //        NSUserDefaults.standardUserDefaults().setObject(dic, forKey: kCityManagerCurCity)
+        
+        return city
+        
+        
+    }
+    
+    
+    
     func getCurCity() -> CityInfo?{
         if curCity != nil {
             return curCity
@@ -67,34 +99,18 @@ class CityManager: NSObject {
         
         
     }
-
     
-    private override init(){
-        super.init()
-        let dic = NSUserDefaults.standardUserDefaults().objectForKey(kCityManagerCityList)
-        self.cityList = Mapper<CityInfo>().mapArray(dic)
-        
-    }
-    
-    func loadCityInfo() -> CityInfo{
-        var loc = LocationManager.shareManager.location
-        if (loc == nil) {
-            loc = LocationManager.shareManager.lastLocation()
-            if (loc == nil){
-                loc = CLLocation(latitude:25.1552 ,longitude:121.6544)
-            }
+    func getCurCityIndex() -> Int{
+        if let index = ((NSUserDefaults.standardUserDefaults().objectForKey(kCityManagerCurCityIndex)) as? NSNumber)?.integerValue{
+            return index
         }
-        
-        var city = CityInfo()
-        city.location = LocationInfo(location: loc)
-//        let dic = city.toJSON()
-//        NSKeyedArchiver.archivedDataWithRootObject(<#T##rootObject: AnyObject##AnyObject#>)
-//        NSUserDefaults.standardUserDefaults().setObject(dic, forKey: kCityManagerCurCity)
-        
-        return city
-        
-        
+        return 0
     }
+    
+    func saveCurCityIndex(index: Int){
+        NSUserDefaults.standardUserDefaults().setObject(NSNumber.init(long: index), forKey: kCityManagerCurCityIndex)
+    }
+
     
     
 }

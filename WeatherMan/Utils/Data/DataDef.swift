@@ -240,6 +240,7 @@ struct Placemark:Mappable{
     var thoroughfare: String?
     var locality: String?
     var administrativeArea: String?
+    var location: LocationInfo?
     
     init?(_ map:Map){
         
@@ -256,6 +257,7 @@ struct Placemark:Mappable{
             self.thoroughfare = place.thoroughfare
             self.locality = place.locality
             self.administrativeArea = place.administrativeArea
+            self.location = LocationInfo(location: place.location)
         }
         
     }
@@ -265,6 +267,7 @@ struct Placemark:Mappable{
         thoroughfare	<- map["thoroughfare"]
         locality	<- map["locality"]
         administrativeArea	<- map["thoroughfare"]
+        location	<- map["location"]
     }
 }
 

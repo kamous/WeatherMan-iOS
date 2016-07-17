@@ -160,11 +160,18 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hy-Cb-x54">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hy-Cb-x54" userLabel="bottomView">
                                                     <rect key="frame" x="0.0" y="86" width="600" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="79W-kg-sxI"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErD-V2-sTm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="1" height="87"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="1" id="5hI-Wj-BIe"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -172,12 +179,15 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="w57-lW-lqf" secondAttribute="trailing" constant="10" id="7gc-Qh-thT"/>
                                                 <constraint firstItem="nak-UD-37u" firstAttribute="top" secondItem="w57-lW-lqf" secondAttribute="bottom" constant="16" id="EiI-nx-Yxr"/>
+                                                <constraint firstItem="ErD-V2-sTm" firstAttribute="leading" secondItem="qra-zn-3tq" secondAttribute="leading" id="GIM-55-L5P"/>
                                                 <constraint firstItem="w57-lW-lqf" firstAttribute="leading" secondItem="qra-zn-3tq" secondAttribute="leading" constant="20" id="Hj5-af-8hv"/>
                                                 <constraint firstItem="6lx-DS-X4u" firstAttribute="baseline" secondItem="nak-UD-37u" secondAttribute="baseline" id="QMU-L2-YPV"/>
+                                                <constraint firstAttribute="bottom" secondItem="ErD-V2-sTm" secondAttribute="bottom" id="QXa-12-frd"/>
                                                 <constraint firstItem="nak-UD-37u" firstAttribute="leading" secondItem="w57-lW-lqf" secondAttribute="leading" id="XBk-7c-NJg"/>
                                                 <constraint firstAttribute="bottom" secondItem="5hy-Cb-x54" secondAttribute="bottom" id="egp-MO-eLE"/>
                                                 <constraint firstItem="w57-lW-lqf" firstAttribute="top" secondItem="qra-zn-3tq" secondAttribute="top" constant="12" id="i2r-ZP-wQD"/>
                                                 <constraint firstAttribute="trailing" secondItem="6lx-DS-X4u" secondAttribute="trailing" constant="20" id="kMs-Il-KEb"/>
+                                                <constraint firstItem="ErD-V2-sTm" firstAttribute="top" secondItem="qra-zn-3tq" secondAttribute="top" id="mpR-lF-KkF"/>
                                                 <constraint firstItem="5hy-Cb-x54" firstAttribute="leading" secondItem="qra-zn-3tq" secondAttribute="leading" id="vky-U9-rpq"/>
                                                 <constraint firstAttribute="trailing" secondItem="5hy-Cb-x54" secondAttribute="trailing" id="woN-28-RxP"/>
                                             </constraints>
@@ -185,6 +195,7 @@
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="cityLabel" destination="w57-lW-lqf" id="wtw-7d-Z9I"/>
+                                            <outlet property="selectedView" destination="ErD-V2-sTm" id="0Oq-8E-HAO"/>
                                             <outlet property="subLabel" destination="nak-UD-37u" id="T3B-Pa-lm5"/>
                                             <outlet property="temperatureLabel" destination="6lx-DS-X4u" id="ca0-an-WK1"/>
                                         </connections>
@@ -226,7 +237,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyt-rE-GSh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyt-rE-GSh">
                                                     <rect key="frame" x="78" y="15" width="35" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

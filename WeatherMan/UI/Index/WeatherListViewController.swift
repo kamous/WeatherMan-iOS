@@ -18,6 +18,7 @@ let kCityNameSection = "kCityNameSection"
 
 class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegate {
     var cityList:[CityInfo]? = nil
+    var curCityIndex: Int = 0
     var cityNames:[Placemark]? = nil
     var dataSource:[String] = [String]()
     var isShowInputView = false
@@ -60,6 +61,7 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
         self.initData()
         self.initDataSource()
         self.tableView.reloadData()
+//        self.loadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -78,6 +80,7 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
 // MARK: - 私有
     func initData(){
         self.cityList = CityManager.shareManager.cityList
+        self.curCityIndex = CityManager.shareManager.getCurCityIndex()
         if self.cityList == nil {
             let dic = NSUserDefaults.standardUserDefaults().objectForKey(kCityManagerCurCity) as? [String:AnyObject]
             let curCity = Mapper<CityInfo>().map(dic)
@@ -112,6 +115,27 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
         self.isCitySelectMode = false
         self.initDataSource()
         self.tableView.reloadData()
+    }
+    
+    func loadData(){
+        if self.cityList?.count == 0 {
+            return
+        }
+        let count = self.cityList?.count
+        for i in 0 ... count!-1 {
+            var cityInfo = self.cityList![i]
+            WeatherModel.shareInstance.loadData((cityInfo.location?.latitude)!, longitude: (cityInfo.location?.longitude)!) { [unowned self]  (isSuccess:Bool,weatherRealTime :WeatherRealTime?) in
+                if let weather = weatherRealTime{
+                    cityInfo.weather = weather
+//                    self.cityList!.removeAtIndex(i)
+//                    self.cityList!.insert(cityInfo, atIndex: i)
+                    print("I:\(i)")
+                    self.cityList![i] = cityInfo
+                    self.updateCityList()
+                }
+            }
+        }
+        
     }
     
     // MARK: - action
@@ -175,6 +199,7 @@ class WeatherListViewController: WMBaseViewController,UIGestureRecognizerDelegat
             let side = KGDrawerSide(rawValue: sideFloat)
             if side == KGDrawerSide.Left {
                 self.tableView.reloadData()
+                self.loadData()
             }
         }
     }
@@ -240,7 +265,8 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
         }else if sectionName == kWeatherInfoSection {
             let cell:CityWetaherInfoCell = tableView.dequeueReusableCellWithIdentifier("CityWetaherInfoCell", forIndexPath: indexPath) as! CityWetaherInfoCell
             let city = self.cityList?[indexPath.row]
-            cell.bindWithCityInfo(city)
+            let isSelected = (indexPath.row == CityManager.shareManager.getCurCityIndex())
+            cell.bindWithCityInfo(city, isSelected: isSelected)
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             return cell
         }else if sectionName == kCityNameSection {
@@ -260,9 +286,16 @@ extension WeatherListViewController: UITableViewDelegate,UITableViewDataSource{
         if sectionName == kCityNameSection {
             var city:CityInfo = CityInfo()
             city.placemark = self.cityNames![indexPath.row]
+            city.location = city.placemark?.location
             self.cityList?.append(city)
             self.updateCityList()
+            self.loadData()
             
+        }else if sectionName == kWeatherInfoSection{
+            let city:CityInfo = self.cityList![indexPath.row]
+            CityManager.shareManager.saveCurCityIndex(indexPath.row)
+            NSNotificationCenter.defaultCenter().postNotificationName(IndexVCChangeCurCityNotification, object: nil, userInfo: ["curCity":city.toJSON()])
+            self.tableView.reloadData()
         }
     }
     

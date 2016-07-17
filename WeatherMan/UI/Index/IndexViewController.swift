@@ -14,6 +14,7 @@ import ObjectMapper
 import CoreLocation
 
 let CYToken = "s2Z8DUdCylyrd=8k"
+let IndexVCChangeCurCityNotification = "IndexVCChangeCurCityNotification"
 
 class IndexViewController: WMBaseViewController {
     var headerView :IndexHeaderView? = nil
@@ -36,6 +37,8 @@ class IndexViewController: WMBaseViewController {
         
         let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(IndexViewController.onSwipeGesture(_:)))
         self.view.addGestureRecognizer(swipeGesture)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(IndexViewController.onChangeCurCityNotification(_:)), name: IndexVCChangeCurCityNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,17 +82,24 @@ class IndexViewController: WMBaseViewController {
 //    }
     
     func loadCYData(){
- 
-        self.cityInfo = CityManager.shareManager.getCurCity()
+        self.loadCurCityInfo()
 //        self.saveDataSource()
-        WeatherModel.shareInstance.loadData((cityInfo?.location?.latitude)!, longitude: (cityInfo?.location?.longitude)!) { (isSuccess:Bool) in
-            if let weather = WeatherModel.shareInstance.weatherRealTime{
+        WeatherModel.shareInstance.loadData((cityInfo?.location?.latitude)!, longitude: (cityInfo?.location?.longitude)!) { (isSuccess:Bool, weatherRealTime: WeatherRealTime?) in
+            WeatherModel.shareInstance.weatherRealTime = weatherRealTime
+            if let weather = weatherRealTime{
                 self.cityInfo?.weather = weather
                 CityManager.shareManager.saveCurCity(self.cityInfo)
             }
             self.tableView.reloadData()
             self.updateHeaderView()
         }
+    }
+    
+    func loadCurCityInfo(){
+        if self.cityInfo == nil{
+            self.cityInfo = CityManager.shareManager.getCurCity()
+        }
+        
     }
     
     
@@ -131,7 +141,19 @@ class IndexViewController: WMBaseViewController {
         }
         
     }
+    
+    // MARK: - Notification
+    func onChangeCurCityNotification(notif: NSNotification){
+        let cityDic = notif.userInfo?["curCity"]
+        let city = Mapper<CityInfo>().map(cityDic)
+        if let curCity = city{
+            self.cityInfo = curCity
+            CityManager.shareManager.saveCurCity(self.cityInfo)
+            self.loadCYData()
+        }
+    }
 }
+
 
 
 // MARK: - UITableView

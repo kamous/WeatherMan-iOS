@@ -19,21 +19,19 @@ struct WeatherModel {
     
     private init(){}
     
-    mutating func loadData(latitude: Double, longitude: Double, completion:(Bool -> Void)){
+    mutating func loadData(latitude: Double, longitude: Double, completion:((Bool,WeatherRealTime?) -> Void)){
         var urlStr = "https://api.caiyunapp.com/v2/\(CYToken)/\(longitude),\(latitude)/realtime.json"
         urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
+            var weather: WeatherRealTime? = nil
             if response.isSuccess{
                 let result = Mapper<WeatherRealTimeResult>().map(response.data)
-                WeatherModel.shareInstance.weatherRealTime = result?.result
-//                self.saveDataSource()
-                //                print("Success:\(response.data)")
+                weather = result?.result
+//                WeatherModel.shareInstance.weatherRealTime = result?.result
             }else{
                 print("Failed:\(response.data)")
             }
-//            if (completion){
-                completion(response.isSuccess)
-//            }
+            completion(response.isSuccess, weather)
         }
     }
     

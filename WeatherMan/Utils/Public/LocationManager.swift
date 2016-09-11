@@ -112,6 +112,8 @@ class LocationManager:NSObject, CLLocationManagerDelegate{
             
             if error == nil && places != nil{
                 completion(placemarks: places)
+            } else {
+                completion(placemarks: nil)
             }
             
         }

@@ -48,7 +48,7 @@ class IndexViewController: WMBaseViewController {
     
     //MARK: - 私有方法
     func initHeaderView(){
-        let headerView :IndexHeaderView = NSBundle.mainBundle().loadNibNamed("IndexHeaderView", owner: self, options: nil)[0] as! IndexHeaderView
+        let headerView :IndexHeaderView = NSBundle.mainBundle().loadNibNamed("IndexHeaderView", owner: self, options: nil)![0] as! IndexHeaderView
         self.view.addSubview(headerView)
         headerView.snp_makeConstraints { (make) in
             make.leading.top.trailing.equalTo(headerView.superview!)

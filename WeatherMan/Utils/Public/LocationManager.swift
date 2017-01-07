@@ -15,7 +15,7 @@ let kLocationManagerPlacemark = "placemark"
 
 class LocationManager:NSObject, CLLocationManagerDelegate{
     static let shareManager: LocationManager = LocationManager()
-    let locationManager :CLLocationManager
+    dynamic let locationManager :CLLocationManager
     dynamic var location :CLLocation? = nil
     dynamic var placemark :CLPlacemark? = nil
     private override init(){
@@ -112,6 +112,8 @@ class LocationManager:NSObject, CLLocationManagerDelegate{
             
             if error == nil && places != nil{
                 completion(placemarks: places)
+            } else {
+                completion(placemarks: nil)
             }
             
         }

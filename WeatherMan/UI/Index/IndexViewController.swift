@@ -14,10 +14,11 @@ import ObjectMapper
 import CoreLocation
 
 let CYToken = "s2Z8DUdCylyrd=8k"
+let IndexVCChangeCurCityNotification = "IndexVCChangeCurCityNotification"
 
 class IndexViewController: WMBaseViewController {
     var headerView :IndexHeaderView? = nil
-    var cityData :CityData?
+    var cityInfo: CityInfo?
 //    var dataModel :WeatherModel = WeatherModel.shareInstance
     
     @IBOutlet weak var tableView: UITableView!
@@ -36,6 +37,8 @@ class IndexViewController: WMBaseViewController {
         
         let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(IndexViewController.onSwipeGesture(_:)))
         self.view.addGestureRecognizer(swipeGesture)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(IndexViewController.onChangeCurCityNotification(_:)), name: IndexVCChangeCurCityNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,76 +48,60 @@ class IndexViewController: WMBaseViewController {
     
     //MARK: - 私有方法
     func initHeaderView(){
-        let headerView :IndexHeaderView = NSBundle.mainBundle().loadNibNamed("IndexHeaderView", owner: self, options: nil)[0] as! IndexHeaderView
+        let headerView :IndexHeaderView = NSBundle.mainBundle().loadNibNamed("IndexHeaderView", owner: self, options: nil)![0] as! IndexHeaderView
         self.view.addSubview(headerView)
         headerView.snp_makeConstraints { (make) in
             make.leading.top.trailing.equalTo(headerView.superview!)
             make.height.equalTo(80)
         }
         self.headerView = headerView
-        
+        self.updateHeaderView()
     }
     
     func updateHeaderView(){
-        
-        if LocationManager.shareManager.placemark == nil {
-            if let placemark = LocationManager.shareManager.lastPlacemark() {
-                LocationManager.shareManager.placemark = placemark
 
-            }
-        }
-        
-        var cityName = LocationManager.shareManager.placemark?.locality
-        if cityName == nil {
-            cityName = LocationManager.shareManager.placemark?.administrativeArea
-        }
-        if cityName == nil {
-            cityName = LocationManager.shareManager.placemark?.name
-        }
-        self.headerView?.titleLabel.text = cityName
-        self.headerView?.subTitleLabel.text = LocationManager.shareManager.placemark?.thoroughfare
-//        self.headerView?.subTitleLabel.hidden = true
+        self.headerView?.titleLabel.text = self.cityInfo?.name
+        self.headerView?.subTitleLabel.text = self.cityInfo?.placemark?.thoroughfare
     }
     
-    func loadData(){
-        var urlStr = "http://api.map.baidu.com/telematics/v3/weather?location=杭州&output=json&ak=\(BaiduManager.appKey)&mcode=com.kamous.WeatherMan"
-        urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
-            if response.isSuccess{
-                var result = Mapper<WeatherResult>().map(response.data)
-                self.cityData = result?.results?.first
-                self.saveDataSource()
-                self.tableView.reloadData()
-                self.updateHeaderView()
-//                print("Success:\(response.data)")
-            }else{
-                print("Failed:\(response.data)")
-            }
-        }
-    }
+//    func loadData(){
+//        var urlStr = "http://api.map.baidu.com/telematics/v3/weather?location=杭州&output=json&ak=\(BaiduManager.appKey)&mcode=com.kamous.WeatherMan"
+//        urlStr = urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+//        WMNetwork.shareManager.request(Alamofire.Method.GET, urlStr) { (response:WMResponseProtocol) in
+//            if response.isSuccess{
+//                var result = Mapper<WeatherResult>().map(response.data)
+//                self.cityData = result?.results?.first
+//                self.saveDataSource()
+//                self.tableView.reloadData()
+//                self.updateHeaderView()
+////                print("Success:\(response.data)")
+//            }else{
+//                print("Failed:\(response.data)")
+//            }
+//        }
+//    }
     
     func loadCYData(){
-        var loc = LocationManager.shareManager.location
-        if (loc == nil) {
-            loc = LocationManager.shareManager.lastLocation()
-            if (loc == nil){
-                loc = CLLocation(latitude:25.1552 ,longitude:121.6544)
+        self.loadCurCityInfo()
+//        self.saveDataSource()
+        WeatherModel.shareInstance.loadData((cityInfo?.location?.latitude)!, longitude: (cityInfo?.location?.longitude)!) { (isSuccess:Bool, weatherRealTime: WeatherRealTime?) in
+            WeatherModel.shareInstance.weatherRealTime = weatherRealTime
+            if let weather = weatherRealTime{
+                self.cityInfo?.weather = weather
+                CityManager.shareManager.saveCurCity(self.cityInfo)
             }
-        }
-        WeatherModel.shareInstance.loadData(loc!.coordinate) { (isSuccess:Bool) in
             self.tableView.reloadData()
             self.updateHeaderView()
         }
     }
     
-    func saveDataSource(){
-        let dic = self.cityData?.toJSON()
-        if let dataDic = dic {
-//            let data = NSKeyedArchiver.archivedDataWithRootObject(dataDic)
-            NSUserDefaults.standardUserDefaults().setObject(dataDic, forKey: "CurentCity")
+    func loadCurCityInfo(){
+        if self.cityInfo == nil{
+            self.cityInfo = CityManager.shareManager.getCurCity()
         }
         
     }
+    
     
     func jumpToLeftVC(){
         let rootNav = UIApplication.sharedApplication().keyWindow?.rootViewController as! UINavigationController
@@ -129,6 +116,8 @@ class IndexViewController: WMBaseViewController {
         if keyPath == kLocationManagerLocation {
             self.loadCYData()
         }else if keyPath == kLocationManagerPlacemark{
+            self.cityInfo?.placemark = Placemark(placemark: LocationManager.shareManager.placemark)
+            CityManager.shareManager.saveCurCity(self.cityInfo)
             self.updateHeaderView()
         }
     }
@@ -142,7 +131,8 @@ class IndexViewController: WMBaseViewController {
         
     }
     @IBAction func onRightButtonPressed(sender: AnyObject) {
-        IndicatorView.showString("正在开发中。。。")
+        NSNotificationCenter.defaultCenter().postNotificationName(RootVCChangeBgNotification, object: nil)
+//        IndicatorView.showString("正在开发中。。。")
     }
     
     func onSwipeGesture(ges: UISwipeGestureRecognizer){
@@ -151,7 +141,19 @@ class IndexViewController: WMBaseViewController {
         }
         
     }
+    
+    // MARK: - Notification
+    func onChangeCurCityNotification(notif: NSNotification){
+        let cityDic = notif.userInfo?["curCity"]
+        let city = Mapper<CityInfo>().map(cityDic)
+        if let curCity = city{
+            self.cityInfo = curCity
+            CityManager.shareManager.saveCurCity(self.cityInfo)
+            self.loadCYData()
+        }
+    }
 }
+
 
 
 // MARK: - UITableView
@@ -169,7 +171,7 @@ extension IndexViewController: UITableViewDelegate,UITableViewDataSource{
         cell.selectionStyle = UITableViewCellSelectionStyle.None
 //        let weather : WeatherData? = self.cityData?.weatherDatas?[0]
 //        cell.bindWithWeatherData(weather)
-        cell.bindWithWeatherRealTime(WeatherModel.shareInstance.weatherRealTime)
+        cell.bindWithWeatherRealTime(self.cityInfo?.weather)
         return cell
         
     }
